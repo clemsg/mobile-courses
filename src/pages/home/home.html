@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Courses</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Courses</h2>
+  <button ion-button color="light" (click)="getInfoProduct()">Scanner le code barre</button>
+  
+  
+    <form (ngSubmit)="update()" #produitForm="ngForm">
+        <ion-list>
+            <ion-item>
+                
+                <ion-input type="text" id="nom" [(ngModel)]="model.nom" name="nom"  placeholder="Nom du produit"></ion-input>
+            </ion-item>
+            <ion-item>
+                
+                <ion-input type="text" id="duree" [(ngModel)]="model.duree" name="duree"  placeholder="Durée"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+                <ion-input type="text" id="codeBarre" [(ngModel)]="model.codeBarre" name="codeBarre"  placeholder="Code barre" #codeBarre="ngModel"></ion-input>
+            </ion-item>
+            
+            <div class="alert alert-danger" [hidden]="codeBarre.valid || codeBarre.pristine">Code barre est requis</div>
+            
+        </ion-list>
+        
+        <div padding>
+            <button ion-button type="submit" block>Ajouter</button>
+        </div>
+        
+    </form>
+</ion-content>
