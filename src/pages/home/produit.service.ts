@@ -27,7 +27,7 @@ export class ProduitService {
         
         let body = res.json();
         
-        return new Produit(`${body.nom} - ${body.marque}`, body.code_barre, 10) || { };
+        return new Produit(`${body.data.nom} - ${body.data.marque}`, body.data.code_barre, 10) || { };
     }
     
     private handleError (error: Response | any) {

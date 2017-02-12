@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { BarcodeScanner } from 'ionic-native';
 import { AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -20,7 +20,8 @@ export class HomePage {
     constructor(
         public navCtrl: NavController, 
         public alertCtrl: AlertController,
-        private produitService: ProduitService
+        private produitService: ProduitService,
+        public loadingCtrl: LoadingController
     ) {}
 
     getInfoProduct(){
@@ -28,13 +29,18 @@ export class HomePage {
         BarcodeScanner.scan().then((result) => {
 
             if(!result.cancelled){
+                let loading = this.loadingCtrl.create({content:'Chargement'});
+                loading.present();
                 
-                this.reponse = this.produitService.getProduit(result.text);
+                this.reponse = this.produitService.getProduit(<number> result.text);
                 this.reponse.subscribe(
                     data => this.model = data,
-                    error => this.errorMessage = <any>error
+                    error => this.errorMessage = <any>error,
+                    () => {
+                        loading.dismiss();
+                    }
                 );
-
+                
             } else {
                 
                 let alert = this.alertCtrl.create({
@@ -58,8 +64,9 @@ export class HomePage {
     
     
     update(){
+        
         console.log('ok');
-
+        
     }
 
 }
